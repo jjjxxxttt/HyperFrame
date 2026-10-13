@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自适应图标前景层（HyperFrame）：缩写「HF」斜体字标 + 底部一条发光扫描线。
+  字形用单条 path 的六个子路径拼成（H 左右竖 + 横梁、F 竖 + 上下两臂），
+  这样整组字共用一个渐变，笔画交叠处不会出现接缝色差。
+  斜切：x += (70 - y) / 8，全套顶点都按同一公式算，保证笔画对齐关系不散。
+  全部内容收在距中心 33dp 的圆内（= 自适应图标 66dp 安全区），圆/方圆遮罩都不裁字。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 字标后方辉光，把字从深色底上托起来 -->
+    <path android:pathData="M0,0h108v108h-108z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="54" android:centerY="58"
+                android:gradientRadius="46">
+                <item android:offset="0" android:color="#4D5EF3FF" />
+                <item android:offset="1" android:color="#005EF3FF" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- 「HF」字标：青白 → 青 → 紫的斜向渐变 -->
+    <path
+        android:pathData="M32,38 L39,38 L35,70 L28,70 Z
+                          M51,38 L58,38 L54,70 L47,70 Z
+                          M30.4,50.5 L56.4,50.5 L55.6,57.5 L29.6,57.5 Z
+                          M62,38 L69,38 L65,70 L58,70 Z
+                          M62,38 L82,38 L81.1,45 L61.1,45 Z
+                          M60.3,52 L76.3,52 L75.4,59 L59.4,59 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="30" android:startY="36"
+                android:endX="80" android:endY="72">
+                <item android:offset="0" android:color="#FFEAF9FF" />
+                <item android:offset="0.45" android:color="#FF5EF3FF" />
+                <item android:offset="1" android:color="#FFA855F7" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- 底部扫描线：呼应"出帧/刷新"的意象 -->
+    <path android:pathData="M33.4,75 L73.4,75 L73.1,77.5 L33.1,77.5 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="33" android:startY="75"
+                android:endX="73" android:endY="77.5">
+                <item android:offset="0" android:color="#005EF3FF" />
+                <item android:offset="0.5" android:color="#FF7CF9FF" />
+                <item android:offset="1" android:color="#00A855F7" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>

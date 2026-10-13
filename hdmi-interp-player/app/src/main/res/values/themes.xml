@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PadLink 全局深色主题（v1.0.1）：无标题栏 + 深色窗口底 + 系统栏透明浅色图标。
+         之前用 Theme.DeviceDefault.Light，白色标题栏 + 浅色状态栏底就是首页顶部白条的根因 -->
+    <style name="PadLinkTheme" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">#FF0A0B10</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#00000000</item>
+        <item name="android:navigationBarColor">#00000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+</resources>

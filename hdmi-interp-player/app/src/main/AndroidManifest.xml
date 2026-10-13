@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- USB 主机模式：声明为非必需，避免在没有 OTG 的设备上无法安装 -->
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="false" />
+
+    <!-- UVC 采集卡属于 USB_CLASS_VIDEO 设备。targetSdk >= 28 时系统强制要求先持有
+         CAMERA 运行时权限，否则 UsbUserPermissionManager.requestPermission() 会故意
+         不弹授权框、直接回传拒绝，hasPermission() 也永远返回 false -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- 声明 CAMERA 权限会隐式要求相机硬件，显式声明为非必需以免影响安装 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <!-- 采集卡的 UAC 音频接口是等时传输（ISO），Android 公开 UsbRequest 只支持 bulk/interrupt，
+         取不到音频数据；唯一纯 Kotlin 通路是让内核 snd-usb-audio 驱动挂载 UAC 设备后，
+         用 AudioRecord 从系统 USB 音频输入读取 —— 而 AudioRecord 必须持有 RECORD_AUDIO -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 录音权限会隐式要求麦克风硬件，显式声明为非必需以免影响安装 -->
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+
+    <!-- 局域网 OTA（v0.24.0）：只在内网访问 PC 端 ota-server.ps1，不出公网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 下载新版本 APK 后拉起系统安装器（安装未知应用）需要它 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:theme="@style/PadLinkTheme"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name="dev.padlink.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- 插入匹配 device_filter 的 USB 设备时由系统拉起：系统弹窗确认后即自动授权，
+                 用于绕开被 ROM 静默拦截的 UsbManager.requestPermission() 通道 -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+        </activity>
+
+        <!-- UVC 取流原型页：只从应用内部跳转，不对外导出 -->
+        <activity
+            android:name="dev.padlink.uvc.CaptureTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false" />
+
+        <!-- 实时预览页：锁定横屏（视频是横向的，竖屏只有一条），只从应用内部跳转 -->
+        <activity
+            android:name="dev.padlink.uvc.PreviewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:exported="false" />
+
+        <!-- 局域网 OTA：把下载好的 APK 以 content:// URI 喂给系统安装器（零依赖自写 Provider） -->
+        <provider
+            android:name="dev.padlink.ota.ApkFileProvider"
+            android:authorities="dev.padlink.apkprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+    </application>
+
+</manifest>

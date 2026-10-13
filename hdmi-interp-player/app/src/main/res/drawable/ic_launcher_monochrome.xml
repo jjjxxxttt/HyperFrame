@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  单色层（Android 13+ 主题图标）：只保留字标与扫描线的白色剪影。
+  用户开启"主题图标"时启动器取这一层染色，形状必须与彩色层一致。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M32,38 L39,38 L35,70 L28,70 Z
+                          M51,38 L58,38 L54,70 L47,70 Z
+                          M30.4,50.5 L56.4,50.5 L55.6,57.5 L29.6,57.5 Z
+                          M62,38 L69,38 L65,70 L58,70 Z
+                          M62,38 L82,38 L81.1,45 L61.1,45 Z
+                          M60.3,52 L76.3,52 L75.4,59 L59.4,59 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M33.4,75 L73.4,75 L73.1,77.5 L33.1,77.5 Z" />
+</vector>

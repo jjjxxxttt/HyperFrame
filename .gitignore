@@ -1,0 +1,28 @@
+# === 工具链 / 第三方依赖（体积过大，不入库）===
+android-toolchain/
+go-install/
+veyra-deps/
+
+# === 大体积二进制 / 模型权重 ===
+null/sclaw-linux
+*.apk
+*.pth
+*.onnx
+gotest/*.out
+hdmi-interp-player/dist/
+hdmi-interp-player/tools/ai-interp/IFRNet/
+
+# === 构建产物与缓存 ===
+build/
+.gradle/
+.kotlin/
+.cxx/
+local.properties
+captures/
+*.log
+
+# === IDE / 系统文件 ===
+.idea/
+*.iml
+Thumbs.db
+.DS_Store
